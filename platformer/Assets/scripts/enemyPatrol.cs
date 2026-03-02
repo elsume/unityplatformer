@@ -19,11 +19,17 @@ public class EnemyPatrol : MonoBehaviour
     {
         transform.position += new Vector3(direction * moveSpeed * Time.deltaTime, 0, 0);
         
-        float distanceFromStart = Vector3.Distance(startPosition, transform.position);
+        float distanceFromStart = transform.position.x - startPosition.x;
         
         if (distanceFromStart > patrolDistance)
         {
-            direction *= -1;
+            transform.position = new Vector3(startPosition.x + patrolDistance, transform.position.y, transform.position.z);
+            direction = -1;
+        }
+        else if (distanceFromStart < -patrolDistance)
+        {
+            transform.position = new Vector3(startPosition.x - patrolDistance, transform.position.y, transform.position.z);
+            direction = 1;
         }
     }
 }
